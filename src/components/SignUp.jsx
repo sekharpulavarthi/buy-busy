@@ -3,13 +3,20 @@ import { Link } from "react-router-dom";
 import AuthLayout from "../utils/common/AuthLayout";
 import Input from "../utils/common/Input";
 import Button from "../utils/common/Button";
+import { toast, ToastContainer } from "react-toastify";
+
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      notify();
+    }
   };
+
+  const notify = () => toast.error("Please enter valid data");
   return (
     <form onSubmit={handleSubmit}>
       <AuthLayout title="Sign Up">
@@ -43,6 +50,7 @@ const SignUp = () => {
           </Link>
         </div>
       </AuthLayout>
+      <ToastContainer />
     </form>
   );
 };

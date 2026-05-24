@@ -5,13 +5,19 @@ import SignIn from "./components/SignIn";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import App from "./App";
-import SignUp from "./components/SignUp.jsx";
+import SignUp from "./components/SignUp";
+import Home from "./components/Home";
+import ProductProvider from "./context/ProductContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "/signin",
         element: <SignIn />,
@@ -28,6 +34,8 @@ const root = createRoot(document.getElementById("root"));
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ProductProvider>
+      <RouterProvider router={router} />
+    </ProductProvider>
   </StrictMode>,
 );

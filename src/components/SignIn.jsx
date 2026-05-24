@@ -11,10 +11,12 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    notify();
+    if (!email || !password) {
+      notify();
+    }
   };
 
-  const notify = () => toast("Please enter valid data!");
+  const notify = () => toast.error("Please enter valid data");
 
   return (
     <form onSubmit={handleSubmit}>
