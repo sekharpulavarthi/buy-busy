@@ -8,6 +8,10 @@ import App from "./App";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import ProductProvider from "./context/ProductContext";
+import AuthProvider from "./context/AuthContext";
+import CartProvider from "./context/CartContext";
+import Cart from "./components/Cart";
+import MyOrders from "./components/MyOrders";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +30,14 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp />,
       },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/myorders",
+        element: <MyOrders />,
+      },
     ],
   },
 ]);
@@ -35,7 +47,11 @@ const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
     <ProductProvider>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </AuthProvider>
     </ProductProvider>
   </StrictMode>,
 );

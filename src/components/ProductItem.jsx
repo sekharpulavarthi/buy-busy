@@ -1,7 +1,25 @@
 import Button from "../utils/common/Button";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const ProductItem = ({ product }) => {
   const { name, description, price, image, id } = product;
+  const [loading, setLoading] = useState(false);
+
+  const { addToCart } = useContext(CartContext);
+
+  const navigate = useNavigate();
+
+  const addProductToCart = async (product) => {
+    setLoading(true);
+    const status = await addToCart(product);
+    setLoading(false);
+    if (!status) {
+      navigate("/signin");
+    }
+  };
 
   return (
     <div
@@ -18,7 +36,13 @@ const ProductItem = ({ product }) => {
       </div>
       <p className="text-lg font-semibold">₹ {price}</p>
       <div className="mt-4 mb-4">
-        <Button>Add to Cart</Button>
+        <Button
+          onClick={() => addProductToCart(product)}
+          disabled={loading}
+          className="bg-[#7064e5] w-full justify-center py-2 rounded-xl text-white font-bold text-xl cursor-pointer"
+        >
+          {loading ? "Adding" : "Add to Cart"}
+        </Button>
       </div>
     </div>
   );

@@ -3,16 +3,30 @@ import { Link } from "react-router-dom";
 import Input from "../utils/common/Input";
 import Button from "../utils/common/Button";
 import AuthLayout from "../utils/common/AuthLayout";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const { handleSignIn, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       notify();
+    } else {
+      const success = await handleSignIn(email, password);
+      if (success) {
+        toast.success("Sign In successful");
+        navigate("/");
+      } else {
+        toast.error("Sign In failed");
+      }
     }
   };
 
@@ -37,14 +51,19 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="mt-2">
-            <Button>Sign In</Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="bg-[#7064e5] w-full justify-center py-2 rounded-xl text-white font-bold text-xl cursor-pointer"
+            >
+              {loading ? "Signing In..." : "Sign In"}
+            </Button>
           </div>
           <Link to="/signup" className="text-sm font-bold mt-4 block">
             Or SignUp instead
           </Link>
         </div>
       </AuthLayout>
-      <ToastContainer />
     </form>
   );
 };
