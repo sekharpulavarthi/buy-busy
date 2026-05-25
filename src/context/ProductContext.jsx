@@ -8,8 +8,6 @@ const ProductProvider = ({ children }) => {
   const [price, setPrice] = useState(10000);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  console.log("Selected Categories:", selectedCategories);
-
   const filteredProducts = products.filter((product) => {
     const matchesSearchTerm = product.name
       .toLowerCase()

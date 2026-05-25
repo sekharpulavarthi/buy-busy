@@ -17,7 +17,6 @@ const Filter = () => {
 
   const setCategory = (e) => {
     const { id, checked } = e.target;
-    console.log(selectedCategories);
     if (checked) {
       setSelectedCategories([...selectedCategories, id]);
     } else {

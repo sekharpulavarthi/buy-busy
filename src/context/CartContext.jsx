@@ -17,6 +17,7 @@ export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [cartLoading, setCartLoading] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -34,9 +35,11 @@ const CartProvider = ({ children }) => {
           // If product already in cart, update quantity
           const existingData = cartDoc.data();
           await updateDoc(cartRef, { quantity: existingData.quantity + 1 });
+          toast.success("Product Added Successfully!");
         } else {
           // If product not in cart, add new entry
           await setDoc(cartRef, { ...product, quantity: 1 });
+          toast.success("Increase product count!");
         }
         fetchCartItems();
         return true;
@@ -53,6 +56,7 @@ const CartProvider = ({ children }) => {
 
       if (cartDoc.exists()) {
         await deleteDoc(cartRef);
+        toast.success("Product Removed Successfully!");
       }
 
       fetchCartItems();
@@ -86,6 +90,7 @@ const CartProvider = ({ children }) => {
   const fetchCartItems = async () => {
     if (!user) return;
     try {
+      setCartLoading(true);
       const cartCollectionRef = collection(db, "userCarts", user.uid, "myCart");
       const cartSnapshot = await getDocs(cartCollectionRef);
       const items = cartSnapshot.docs.map((doc) => ({
@@ -95,6 +100,8 @@ const CartProvider = ({ children }) => {
       setCartItems(items);
     } catch (error) {
       console.error("Error fetching cart items:", error);
+    } finally {
+      setCartLoading(false);
     }
   };
 
@@ -110,6 +117,8 @@ const CartProvider = ({ children }) => {
         fetchCartItems,
         removeFromCart,
         decreaseProductFromCart,
+        setCartItems,
+        cartLoading,
       }}
     >
       {children}

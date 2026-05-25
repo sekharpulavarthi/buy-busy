@@ -19,8 +19,10 @@ const Header = () => {
 
   return (
     <div className="flex justify-between py-6 px-16 items-center shadow">
-      <h1 className="text-2xl font-bold text-[#7064e5]">Busy Buy</h1>
-      <div className="flex gap-6 flex-wrap">
+      <Link to="/" className="flex items-center gap-1">
+        <h1 className="text-2xl font-bold text-[#7064e5]">Busy Buy</h1>
+      </Link>
+      <div className="flex gap-10 flex-wrap">
         <Link to="/" className="flex items-center gap-1">
           <FaHome className="text-2xl" />
           <span className="text-[#7064e5] text-lg font-bold">Home</span>
