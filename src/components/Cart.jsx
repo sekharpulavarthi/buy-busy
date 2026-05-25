@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import { collection, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebaseInit";
 import { useNavigate } from "react-router-dom";
+import { GridLoader } from "react-spinners";
 
 const Cart = () => {
   const { cartItems, setCartItems, cartLoading } = useContext(CartContext);
@@ -50,7 +51,15 @@ const Cart = () => {
     <>
       {cartLoading ? (
         <div className="flex justify-center items-center h-full">
-          <h1 className="text-2xl font-bold">Loading...</h1>
+          <h1 className="text-2xl font-bold">
+            <GridLoader
+              color="#7064e5"
+              loading={true}
+              size={15}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </h1>
         </div>
       ) : (
         <div className="flex mt-10">

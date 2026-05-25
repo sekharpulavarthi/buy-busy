@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseInit";
 import { AuthContext } from "../context/AuthContext";
+import { GridLoader } from "react-spinners";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -41,7 +42,13 @@ const MyOrders = () => {
     <>
       {loading ? (
         <div className="flex justify-center items-center h-full">
-          <h1 className="text-2xl font-bold">Loading...</h1>
+          <GridLoader
+            color="#7064e5"
+            loading={true}
+            size={15}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         </div>
       ) : (
         <>

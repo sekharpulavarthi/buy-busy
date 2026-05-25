@@ -6,6 +6,7 @@ import ProductItem from "./ProductItem";
 import Filter from "./Filter";
 import { useContext, useState } from "react";
 import { ProductContext } from "../context/ProductContext";
+import { GridLoader } from "react-spinners";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -51,7 +52,13 @@ const Home = () => {
         <div className="flex-1 overflow-y-auto p-6">
           {loading ? (
             <div className="flex justify-center items-center h-full">
-              <h1 className="text-2xl font-bold">Loading...</h1>
+              <GridLoader
+                color="#7064e5"
+                loading={true}
+                size={15}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
             </div>
           ) : (
             <div className="flex flex-wrap gap-6">
